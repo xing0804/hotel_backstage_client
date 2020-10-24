@@ -5,10 +5,9 @@
             <el-menu mode="horizontal" :default-active="activeIndex" class="el-menu-demo" style="background: none" text-color="#fff"  active-text-color="#ffd04b" background-color="#545c64">
                 <el-menu-item index="1">管理中心</el-menu-item>
                 <el-submenu index="2">
-                    <template slot="title">我的工作台</template>
-                    <el-menu-item index="2-1">选项1</el-menu-item>
-                    <el-menu-item index="2-2">选项2</el-menu-item>
-                    <el-menu-item index="2-3">选项3</el-menu-item>
+                    <template slot="title">admin</template>
+                    <el-menu-item index="2-1">修改密码</el-menu-item>
+                    <el-menu-item index="2-2">退出登陆</el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-header>

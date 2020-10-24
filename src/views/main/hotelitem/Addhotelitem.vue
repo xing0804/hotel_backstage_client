@@ -23,7 +23,6 @@
                 <el-input v-model="hotelForm.hscore"></el-input>
             </el-form-item>
             <el-form-item label="酒店缩略图">
-
             </el-form-item>
             <el-form-item>
                 <el-upload
@@ -35,6 +34,22 @@
                     <img v-if="hotelForm.himgurl" :src="IMGURL+hotelForm.himgurl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     <div slot="tip" class="el-upload__tip" style="color: red">只能上传jpg/png/jpeg/webp文件，且不超过400kb,最佳比例1:1</div>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="酒店轮播图">
+            </el-form-item>
+            <el-form-item>
+                <el-upload
+                        class="avatar-uploader"
+                        :action="uploadurl"
+                        list-type="picture-card"
+                        multiple
+                        :limit="4"
+                        :on-success="handleBannerSuccess"
+                        :on-remove="handleBannerRemove"
+                        >
+                    <i class="el-icon-plus"></i>
+                    <div slot="tip" class="el-upload__tip" style="color: red">只能上传jpg/png/jpeg/webp文件，且不超过400kb,最佳比例1:1,最多只能上传4张</div>
                 </el-upload>
             </el-form-item>
             <el-form-item label="酒店所在省份">
@@ -106,6 +121,7 @@
                     hlabel:"",
                     hscore:'',
                     himgurl:'',
+                    hbanner:'',
                     hprovince:'',
                     hcity:'',
                     harea:'',
@@ -116,6 +132,7 @@
                 uploadurl: URL+'admin/upload/index',
                 city,
                 province:[],
+                bannerArr:[],
             }
         },
         computed:{
@@ -162,6 +179,17 @@
                     this.$message.error("图片格式必须是jpg,jpeg,png,webp");
                 }
                 return sizeFlag && typeFlag;
+            },
+            //上传轮播图
+            handleBannerSuccess(res){
+                this.bannerArr.push(res.imgurl);
+                this.hotelForm.hbanner=this.bannerArr.join(",");
+            },
+            //轮播图删除
+            handleBannerRemove(file){
+                let url = file.response.imgurl;
+                this.bannerArr = this.bannerArr.filter(ele=>ele!=url);
+                this.hotelForm.hbanner=this.bannerArr.join(",");
             },
             //获取省份
             setProvince(){
